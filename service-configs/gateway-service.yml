@@ -1,0 +1,69 @@
+server:
+  port: 8080
+
+spring:
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    baseUrl: http://localhost:9711
+
+  cloud:
+    gateway:
+      filter:
+        request-rate-limiter:
+          #          区别不同的service
+          deny-empty-key: false
+
+      routes:
+        - id: user-ui
+          metadata:
+            response-timeout: 200
+            connect-timeout: 200
+          uri: lb://user-ui
+          predicates:
+            - Path=/user_list,/user_input,/user_display/**
+          filters:
+            - StripPrefix=0
+            - AddResponseHeader=X-TECHBOW-SERVER, user-ui
+            - name: CircuitBreaker
+              args:
+                name: user-ui-circuit-breaker
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter
+              args:
+                #                token恢复速度
+                redis-rate-limiter.replenishRate: 10
+                #                token bucket size
+                redis-rate-limiter.burstCapacity: 100
+                #                每次接受request消耗速度
+                redis-rate-limiter.requestedTokens: 1
+
+        - id: user-crud-service
+          metadata:
+            response-timeout: 200
+            connect-timeout: 200
+          uri: lb://user-crud-service
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=0
+            - AddResponseHeader=X-TECHBOW-SERVER, user-crud
+
+resilience4j:
+  bulkhead:
+    configs:
+      default:
+        maxConcurrentCalls: 100
+        maxWaitDuration: 10ms
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8085/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

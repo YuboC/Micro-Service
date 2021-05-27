@@ -1,0 +1,53 @@
+server:
+  port: 8081
+
+spring:
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    baseUrl: http://localhost:9711
+
+resilience4j:
+  bulkhead:
+    instances:
+      i18n_service:
+        maxConcurrentCalls: 100
+        maxWaitDuration: 10ms
+
+  thread-pool-bulkhead:
+    instances:
+      user_crud_service:
+        maxThreadPoolSize: 4
+        coreThreadPoolSize: 2
+        queueCapacity: 2
+
+  circuitbreaker:
+    instances:
+      user_crud_service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 20
+        waitDurationInOpenState: 50s
+        failureRateThreshold: 50
+
+  retry:
+    instances:
+      user_crud_service:
+        maxRetryAttempts: 2
+        waitDuration: 100
+      i18n_service:
+        maxRetryAttempts: 8
+        waitDuration: 50
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8085/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
