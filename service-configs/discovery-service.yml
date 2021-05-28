@@ -6,14 +6,14 @@ spring:
     sampler:
       probability: 1.0
   zipkin:
-    baseUrl: http://localhost:9711
+    baseUrl: http://zipkin-services:9711
 
 eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://localhost:8085/eureka
+      defaultZone: http://discovery-services:8085/eureka
 
 management:
   endpoints:
