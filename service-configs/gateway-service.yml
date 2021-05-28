@@ -6,7 +6,7 @@ spring:
     sampler:
       probability: 1.0
   zipkin:
-    baseUrl: http://localhost:9711
+    baseUrl: http://zipkin-services:9711
 
   cloud:
     gateway:
@@ -60,7 +60,7 @@ resilience4j:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8085/eureka/
+      defaultZone: http://discovery-services:8085/eureka/
 
 management:
   endpoints:
