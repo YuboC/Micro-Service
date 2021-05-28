@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Employee Display</title>
+</head>
+<body>
+<div class="row container mt-4 ml-4">
+    <div class="col-sm-6">
+        <div class="card">
+            <h5 class="card-header">User Info</h5>
+            <div class="card-body">
+                <div class="row mt-3">
+                    <label for="UserID" class="col-sm-2 col-form-label rounded bg-secondary text-white text-right">
+                        <label th:text="${identifierLabel}">Identifier</label>
+                    </label>
+                    <div class="col">
+                        <input type="text" disabled class="form-control-plaintext" id="UserID" th:value="${user.id}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <label for="UserName" class="col-sm-2 col-form-label rounded bg-secondary text-white text-right">
+                        <label th:text="${nameLabel}">Name</label>
+                    </label>
+                    <div class="col">
+                        <input type="text" disabled class="form-control-plaintext" id="UserName" th:value="${user.name}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <label for="UserEmail" class="col-sm-2 col-form-label rounded bg-secondary text-white text-right">
+                        <label th:text="${emailLabel}">Email</label>
+                    </label>
+                    <div class="col">
+                        <input type="text" disabled class="form-control-plaintext" id="UserEmail" th:value="${user.email}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

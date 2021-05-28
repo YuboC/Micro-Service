@@ -1,0 +1,159 @@
+version: '3.9'
+
+services:
+  # mysql-service:
+  #   container_name: com.techbow.user.mysql
+  #   image: mysql
+  #   ports:
+  #     - 3306:3306
+  #   environment:
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  #     MYSQL_USER: "root"
+  #     MYSQL_ROOT_PASSWORD: "root-password"
+  #     MYSQL_DATABASE: "default_db"
+  #     MYSQL_ROOT_HOST: "%"
+  #   volumes:
+  #     - "mysql-volume:/var/lib/mysql"
+
+  config-services:
+    container_name: config-services
+    image: lalagola/configserve:2.0
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    ports:
+      - 8084:8084
+
+  discovery-services:
+    container_name: discovery-services
+    image: lalagola/discovery:2.0
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    ports:
+      - 8085:8085
+
+  gateway-services:
+    container_name: gateway-services
+    image: lalagola/gateway:2.0
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    ports:
+      - 8080:8080
+  i18n-services:
+    container_name: i18n-services
+    image: lalagola/i18n:2.0
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    ports:
+      - 8083:8083
+  usercrud-services:
+    container_name: crud-services
+    image: lalagola/usercrud:2.0
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    ports:
+      - 8082:8082
+
+  userui-services:
+    container_name: userui-services
+    image: lalagola/userui:2.0
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    ports:
+      - 8081:8081
+
+  zipkin-services:
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    ports:
+      - 8081:8081
+    container_name: zipkin-service
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+  # logstash:
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         #cpus: '0.50'
+  #         memory: 300M
+  #   container_name: logstach
+  #   image: docker.elastic.co/logstash/logstash:7.12.0
+  #   ports:
+  #     - 25826:25826
+  #     - 5044:5044
+  #   restart: on-failure
+  #   volumes:
+  #     - "${PWD}/service-configs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf"
+
+
+  # kibana:
+  #   container_name: kibana
+  #   image: docker.elastic.co/kibana/kibana:7.12.0
+  #   ports:
+  #     - 5601:5601
+  #   restart: on-failure
+
+  # elasticsearch:
+  #   container_name: elasticsearch
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+  #   ports:
+  #     - 9200:9200
+  #   environment:
+  #     - "discovery.type=single-node"
+  #   volumes:
+  #     - "${PWD}/database/elasticsearch:/usr/share/elasticsearch/data"
+
+  prometheus-services:
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    container_name: prometheus-services
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ${PWD}/service-configs/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana-services:
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 300M
+    container_name: grafana-services
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ${PWD}/service-configs/grafana.ini:/etc/grafana/grafana.ini
+
+# volumes:
+#   mysql-volume:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: $PWD/database/mysql-volume

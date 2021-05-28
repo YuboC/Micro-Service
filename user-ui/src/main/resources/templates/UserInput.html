@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>User Input</title>
+</head>
+<body>
+<h1 th:text="${input_title}">Create a User</h1>
+<form action="user_input" method="POST">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" th:text="${nameLabel}">Username</span>
+        </div>
+        <input type="text" name="name" class="form-control" placeholder="Pick a username">
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" th:text="${emailLabel}">Email</span>
+        </div>
+        <input type="text" name="email" class="form-control" placeholder="Specify an email">
+    </div>
+
+    <input type="submit" class="btn btn-success"><br>
+</form>
+</body>
+</html>

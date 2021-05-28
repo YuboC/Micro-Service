@@ -1,0 +1,8 @@
+rootProject.name = 'user'
+include 'config-service'
+include 'discovery-service'
+include 'user-ui'
+include 'user-crud-service'
+include 'i18n-service'
+include 'gateway-service'
+

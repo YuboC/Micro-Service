@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>User List</title>
+</head>
+<body>
+<table class="table table-striped table-hover">
+    <thead><tr>
+        <th scope="col"><span th:text="${identifierLabel}">Identifier</span></td>
+        <th scope="col"><span th:text="${nameLabel}">Name</span></td>
+        <th scope="col"><span th:text="${emailLabel}">Email</span></td>
+    </tr></thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td><a th:href="@{~/user_display/{id}(id=${user.id})}">
+            <span th:text="${user.id}">User ID</span>
+        </a></td>
+        <td><span th:text="${user.name}">User Name</span></td>
+        <td><span th:text="${user.email}">User Email</span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
