@@ -10,7 +10,7 @@ spring:
       enabled: "ALWAYS"
 
   config:
-    import: optional:configserver:http://config-services:8084/
+    import: optional:configserver:http://localhost:8084/
 
 management:
   endpoints:
