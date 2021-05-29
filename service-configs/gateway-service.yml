@@ -67,3 +67,10 @@ management:
     web:
       exposure:
         include: "*"
+  health:
+    probes:
+      enabled: true
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
