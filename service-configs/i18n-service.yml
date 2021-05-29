@@ -1,12 +1,13 @@
 server:
   port: 8083
-
+  shutdown: graceful
+  
 spring:
   sleuth:
     sampler:
       probability: 1.0
   zipkin:
-    baseUrl: http://localhost:9711
+    baseUrl: http://zipkin-services:9711
 
 
 i18nproperties:
@@ -32,10 +33,17 @@ i18nproperties:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8085/eureka/
+      defaultZone: http://discovery-services:8085/eureka/
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  health:
+    probes:
+      enabled: true
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true

@@ -87,7 +87,7 @@ services:
           memory: 300M
     ports:
       - 8081:8081
-    container_name: zipkin-service
+    container_name: zipkin-services
     image: openzipkin/zipkin
     ports:
       - 9411:9411
@@ -124,18 +124,18 @@ services:
   #   volumes:
   #     - "${PWD}/database/elasticsearch:/usr/share/elasticsearch/data"
 
-  prometheus-services:
-    deploy:
-      resources:
-        limits:
-          #cpus: '0.50'
-          memory: 300M
-    container_name: prometheus-services
-    image: prom/prometheus
-    ports:
-      - 9090:9090
-    volumes:
-      - ${PWD}/service-configs/prometheus.yml:/etc/prometheus/prometheus.yml
+  # prometheus-services:
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         #cpus: '0.50'
+  #         memory: 300M
+  #   container_name: prometheus-services
+  #   image: prom/prometheus
+  #   ports:
+  #     - 9090:9090
+  #   volumes:
+  #     - ${PWD}/service-configs/prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana-services:
     deploy:
