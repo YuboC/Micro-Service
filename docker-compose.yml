@@ -14,7 +14,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /root/Developer/SpringCloud/Micro-Service/mapped-volumes/mongodb-volume
+      device: $PWD/mapped-volumes/mongodb-volume
 
   # mysql-service:
   #   container_name: com.techbow.user.mysql
